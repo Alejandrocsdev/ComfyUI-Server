@@ -13,16 +13,23 @@ exports.postPrompt = async (prompt) => {
 };
 
 exports.getServerStatus = async () => {
-  const result = await system.execAsync('systemctl show comfyui --property=ActiveState --value');
-  return { status: result.trim() };
+  const command = 'systemctl show comfyui --property=ActiveState --value';
+  const result = await system.execAsync(command);
+  return result.trim();
+};
+
+exports.getServerLog = async (lines = 100) => {
+  const command = `journalctl -u comfyui -n ${lines} --no-pager`;
+  const result = await system.execAsync(command);
+  return result;
 };
 
 exports.startServer = async () => {
   await system.execAsync('sudo systemctl start comfyui');
-  return { status: 'started' };
+  return 'started';
 };
 
 exports.stopServer = async () => {
   await system.execAsync('sudo systemctl stop comfyui');
-  return { status: 'stopped' };
+  return 'stopped';
 };

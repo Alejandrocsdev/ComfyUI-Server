@@ -22,16 +22,22 @@ exports.sendPrompt = asyncHandler(async (req, res) => {
 });
 
 exports.getServerStatus = asyncHandler(async (req, res) => {
-  const { status } = await comfyuiService.getServerStatus();
+  const status = await comfyuiService.getServerStatus();
   res.json({ status });
 });
 
+exports.getServerLog = asyncHandler(async (req, res) => {
+  const { lines } = req.query;
+  const log = await comfyuiService.getServerLog(Number(lines) || 100);
+  res.json({ log });
+});
+
 exports.startServer = asyncHandler(async (req, res) => {
-  const { status } = await comfyuiService.startServer();
+  const status = await comfyuiService.startServer();
   res.json({ status });
 });
 
 exports.stopServer = asyncHandler(async (req, res) => {
-  const { status } = await comfyuiService.stopServer();
+  const status = await comfyuiService.stopServer();
   res.json({ status });
 });
