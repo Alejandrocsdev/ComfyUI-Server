@@ -1,34 +1,37 @@
-const comfyuiService = require('../services/comfyui.service');
+const comfyuiService = require('../services/comfyui/service');
+const comfyuiHelper = require('../services/comfyui/helper');
 
 const { asyncHandler } = require('../middlewares');
 
-exports.getPrompt = asyncHandler(async (req, res) => {
+const CUstomError = require('../errors/CustomError');
+
+exports.getImage = asyncHandler(async (req, res) => {
   const { promptId } = req.params;
   const data = await comfyuiService.getHistory(promptId);
-	res.json({ message: 'Prompt retrieved successfully', data });
+  const image = await comfyuiHelper.getImage(data, promptId);
+  if (!image) {
+    throw new CUstomError(404, 'No image found');
+  }
+  return res.json({ image });
 });
 
 exports.sendPrompt = asyncHandler(async (req, res) => {
-  const data = await comfyuiService.postPrompt(req.body);
-  res.json({ message: 'Prompt sent successfully', data });
+  const workflow = await comfyuiHelper.getWorkflow(req.body);
+  const data = await comfyuiService.postPrompt(workflow);
+  res.json(data);
 });
 
 exports.getServerStatus = asyncHandler(async (req, res) => {
   const { status } = await comfyuiService.getServerStatus();
-  res.json({ message: `ComfyUI server status: ${status}` });
+  res.json({ status });
 });
 
 exports.startServer = asyncHandler(async (req, res) => {
   const { status } = await comfyuiService.startServer();
-  res.json({ message: `ComfyUI ${status} successfully` });
-});
-
-exports.restartServer = asyncHandler(async (req, res) => {
-  const { status } = await comfyuiService.restartServer();
-  res.json({ message: `ComfyUI ${status} successfully` });
+  res.json({ status });
 });
 
 exports.stopServer = asyncHandler(async (req, res) => {
   const { status } = await comfyuiService.stopServer();
-  res.json({ message: `ComfyUI ${status} successfully` });
+  res.json({ status });
 });

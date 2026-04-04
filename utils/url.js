@@ -1,9 +1,9 @@
 // Environment Variables
-const { NODE_ENV, CLIENT_URL, CLIENT_PORT } = process.env;
+const { NODE_ENV, CLIENT_PRO_URL, CLIENT_DEV_URL } = process.env;
 
 const isProduction = NODE_ENV === 'production';
 
-const client = isProduction ? CLIENT_URL : `http://localhost:${CLIENT_PORT}`;
+const client = isProduction ? CLIENT_PRO_URL : CLIENT_DEV_URL;
 
 const url = { client };
 

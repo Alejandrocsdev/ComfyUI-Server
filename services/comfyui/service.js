@@ -1,6 +1,6 @@
-const api = require('../config/api');
+const api = require('../../config/api');
 
-const { system } = require('../utils');
+const { system } = require('../../utils');
 
 exports.getHistory = async (promptId) => {
   const { data } = await api.get(`/history/${promptId}`);
@@ -20,11 +20,6 @@ exports.getServerStatus = async () => {
 exports.startServer = async () => {
   await system.execAsync('sudo systemctl start comfyui');
   return { status: 'started' };
-};
-
-exports.restartServer = async () => {
-  await system.execAsync('sudo systemctl restart comfyui');
-  return { status: 'restarted' };
 };
 
 exports.stopServer = async () => {
