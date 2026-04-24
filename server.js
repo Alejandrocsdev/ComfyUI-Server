@@ -12,19 +12,23 @@ const { cors, notFound, errorHandler } = require('./middlewares');
 
 const serverError = require('./errors/serverError');
 
+const cookieParser = require('cookie-parser');
+const passport = require('./config/passport');
 const routes = require('./routes');
 const { startPoller } = require('./services/runpod/poller');
 
 const start = async () => {
   // 1. Connect databases
-  // await connectMysql();
+  await connectMysql();
 
   // 2. Create express instance
   const app = express();
 
   // Middlewares
 	app.use(cors);
+  app.use(cookieParser());
   app.use(express.json());
+  app.use(passport.initialize());
 
   // Routes
   app.get('/', (req, res) => res.json({ status: 'ok' }));

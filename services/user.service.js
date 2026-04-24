@@ -11,3 +11,14 @@ exports.create = async (payload = {}) => {
 exports.delete = async (userId) => {
   return User.destroy({ where: { id: userId } });
 };
+
+exports.findOrCreate = async ({ email, name, avatar }) => {
+  const [user, created] = await User.findOrCreate({
+    where: { email },
+    defaults: { name, avatar, last_login: new Date() },
+  });
+  if (!created) {
+    await user.update({ name, avatar, last_login: new Date() });
+  }
+  return user;
+};

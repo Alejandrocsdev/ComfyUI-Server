@@ -10,14 +10,25 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING,
       },
+      email: {
+        allowNull: false,
+        unique: true,
+        type: DataTypes.STRING,
+      },
+      avatar: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      last_login: {
+        allowNull: true,
+        type: DataTypes.DATE,
+      },
     },
     {
       sequelize,
       modelName: 'User',
       tableName: 'users',
       underscored: true,
-      // defaultScope: { attributes: { exclude: ['createdAt', 'updatedAt'] } },
-      // scopes: { admin: { attributes: { exclude: ['id'] } } },
     },
   );
   return User;
