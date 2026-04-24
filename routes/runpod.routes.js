@@ -2,7 +2,7 @@ const { Router } = require('express');
 const router = Router();
 
 const runpodController = require('../controllers/runpod.controller');
-const { addClient } = require('../services/runpod/streamState');
+const { addClient } = require('../sse');
 
 // SSE stream — must be registered before /:podId to avoid "stream" matching as a param
 router.get('/pods/stream', (req, res) => {

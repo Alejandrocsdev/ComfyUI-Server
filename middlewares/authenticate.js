@@ -1,13 +1,13 @@
-const jwt = require('jsonwebtoken');
+const { jwt, cookie } = require('../utils');
 
 const authenticate = (req, res, next) => {
   const token = req.cookies?.token;
   if (!token) return res.status(401).json({ message: 'Unauthorized' });
   try {
-    req.user = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = jwt.verify(token);
     next();
   } catch {
-    res.clearCookie('token');
+    cookie.clear(res);
     res.status(401).json({ message: 'Unauthorized' });
   }
 };

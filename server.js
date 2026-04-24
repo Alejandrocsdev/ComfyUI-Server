@@ -8,14 +8,13 @@ const port = Number(process.env.PORT) || 3000;
 
 const { connectMysql } = require('./config/db');
 
-const { cors, notFound, errorHandler } = require('./middlewares');
+const cookieParser = require('cookie-parser');
+const { cors, notFound, errorHandler, passportInit } = require('./middlewares');
 
 const serverError = require('./errors/serverError');
 
-const cookieParser = require('cookie-parser');
-const passport = require('./config/passport');
 const routes = require('./routes');
-const { startPoller } = require('./services/runpod/poller');
+const { startPoller } = require('./jobs/poller');
 
 const start = async () => {
   // 1. Connect databases
@@ -28,7 +27,7 @@ const start = async () => {
 	app.use(cors);
   app.use(cookieParser());
   app.use(express.json());
-  app.use(passport.initialize());
+  app.use(passportInit);
 
   // Routes
   app.get('/', (req, res) => res.json({ status: 'ok' }));

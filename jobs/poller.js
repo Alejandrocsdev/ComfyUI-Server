@@ -1,5 +1,5 @@
-const runpodService = require('./service');
-const { broadcast } = require('./streamState');
+const runpodService = require('../services/runpod/service');
+const { broadcast } = require('../sse');
 
 // Persist reachability across ticks so we stop pinging once a service is up.
 // Reset when pod ID changes (new pod created or pod terminated).

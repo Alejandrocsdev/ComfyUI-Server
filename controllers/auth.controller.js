@@ -1,13 +1,5 @@
-const jwt = require('jsonwebtoken');
-const { url } = require('../utils');
+const { url, jwt, cookie } = require('../utils');
 const userService = require('../services/user.service');
-
-const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'lax',
-  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-};
 
 exports.googleCallback = async (req, res) => {
   if (!req.user) return res.redirect(`${url.client}/login?error=unauthorized`);
@@ -22,21 +14,17 @@ exports.googleCallback = async (req, res) => {
     console.error('[Auth] DB sync failed on login:', err.message);
   }
 
-  const token = jwt.sign(
-    { email: req.user.email, name: req.user.name, avatar: req.user.avatar },
-    process.env.JWT_SECRET,
-    { expiresIn: '7d' }
-  );
-  res.cookie('token', token, COOKIE_OPTIONS);
+  const token = jwt.sign({
+    email: req.user.email,
+    name: req.user.name,
+    avatar: req.user.avatar,
+  });
+  cookie.store(res, token);
   res.redirect(url.client);
 };
 
 exports.logout = (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
-  });
+  cookie.clear(res);
   res.json({ message: 'Logged out' });
 };
 
