@@ -1,4 +1,4 @@
-const runpodApi = require('../config/runpodApi');
+const runpodApi = require('../../config/api/runpodApi');
 
 const POD_BODY = {
   name: 'ComfyUI-5090',
@@ -12,6 +12,16 @@ const POD_BODY = {
   volumeInGb: 0,
   interruptible: false,
   globalNetworking: false,
+};
+
+exports.getPods = async () => {
+  const { data } = await runpodApi.get('/v1/pods');
+  return data;
+};
+
+exports.getPod = async (podId) => {
+  const { data } = await runpodApi.get(`/v1/pods/${podId}`);
+  return data;
 };
 
 exports.createPod = async () => {

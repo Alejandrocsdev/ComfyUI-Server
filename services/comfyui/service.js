@@ -1,4 +1,4 @@
-const api = require('../../config/api');
+const api = require('../../config/api/comfyuiApi');
 
 const { system } = require('../../utils');
 

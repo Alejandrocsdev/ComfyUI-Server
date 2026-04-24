@@ -3,7 +3,9 @@ const router = Router();
 
 const runpodController = require('../controllers/runpod.controller');
 
-router.post('/create', runpodController.createPod);
-router.post('/terminate', runpodController.terminatePod);
+router.get('/pods', runpodController.getPods);
+router.get('/pods/:podId', runpodController.getPod);
+router.post('/pods', runpodController.createPod);
+router.delete('/pods/:podId', runpodController.terminatePod);
 
 module.exports = router;
