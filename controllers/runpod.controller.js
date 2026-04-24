@@ -16,8 +16,16 @@ exports.getPod = asyncHandler(async (req, res) => {
 });
 
 exports.createPod = asyncHandler(async (req, res) => {
-  const data = await runpodService.createPod();
-  res.status(201).json(data);
+  try {
+    const data = await runpodService.createPod();
+    res.status(201).json(data);
+  } catch (error) {
+    const runpodError = error.response?.data?.error ?? '';
+    if (runpodError.toLowerCase().includes('There are no instances currently available')) {
+      return res.status(503).json({ message: 'There are no instances currently available' });
+    }
+    throw error;
+  }
 });
 
 exports.terminatePod = asyncHandler(async (req, res) => {
