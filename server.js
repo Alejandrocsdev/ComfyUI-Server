@@ -13,6 +13,7 @@ const { cors, notFound, errorHandler } = require('./middlewares');
 const serverError = require('./errors/serverError');
 
 const routes = require('./routes');
+const { startPoller } = require('./services/runpod/poller');
 
 const start = async () => {
   // 1. Connect databases
@@ -33,7 +34,10 @@ const start = async () => {
   app.use(notFound);
   app.use(errorHandler);
 
-  // 3. Start server
+  // 3. Start RunPod poller (feeds SSE stream)
+  startPoller();
+
+  // 4. Start server
   const server = app.listen(port, () => {
     console.info('[Server] listening on port', port);
   });

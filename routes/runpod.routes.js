@@ -2,9 +2,22 @@ const { Router } = require('express');
 const router = Router();
 
 const runpodController = require('../controllers/runpod.controller');
+const { addClient } = require('../services/runpod/streamState');
+
+// SSE stream — must be registered before /:podId to avoid "stream" matching as a param
+router.get('/pods/stream', (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  const cleanup = addClient(res);
+  req.on('close', cleanup);
+});
 
 router.get('/pods', runpodController.getPods);
 router.get('/pods/:podId', runpodController.getPod);
+router.get('/pods/:podId/ping', runpodController.pingPod);
 router.post('/pods', runpodController.createPod);
 router.delete('/pods/:podId', runpodController.terminatePod);
 

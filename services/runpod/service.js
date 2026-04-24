@@ -1,3 +1,4 @@
+const axios = require('axios');
 const runpodApi = require('../../config/api/runpodApi');
 
 const POD_BODY = {
@@ -38,4 +39,14 @@ exports.createPod = async () => {
 exports.terminatePod = async (podId) => {
   const { data } = await runpodApi.delete(`/v1/pods/${podId}`);
   return data;
+};
+
+exports.pingPod = async (podId, port) => {
+  try {
+    const url = `https://${podId}-${port}.proxy.runpod.net`;
+    const response = await axios.get(url, { timeout: 5000 });
+    return response.status === 200;
+  } catch {
+    return false;
+  }
 };
