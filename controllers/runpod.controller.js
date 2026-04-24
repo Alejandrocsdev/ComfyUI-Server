@@ -21,8 +21,9 @@ exports.createPod = asyncHandler(async (req, res) => {
     res.status(201).json(data);
   } catch (error) {
     const runpodError = error.response?.data?.error ?? '';
-    if (runpodError.toLowerCase().includes('There are no instances currently available')) {
-      return res.status(503).json({ message: 'There are no instances currently available' });
+		const errorMessage = 'There are no instances currently available'
+    if (runpodError.toLowerCase().includes(errorMessage)) {
+      return res.status(503).json({ message: errorMessage });
     }
     throw error;
   }
@@ -42,4 +43,15 @@ exports.pingPod = asyncHandler(async (req, res) => {
   }
   const reachable = await runpodService.pingPod(podId, port);
   res.json({ reachable });
+});
+
+exports.listPodStorage = asyncHandler(async (req, res) => {
+  const { podId } = req.params;
+  const data = await runpodService.listPodStorage(podId);
+  res.json(data);
+});
+
+exports.getBalance = asyncHandler(async (req, res) => {
+  const data = await runpodService.getBalance();
+  res.json(data);
 });

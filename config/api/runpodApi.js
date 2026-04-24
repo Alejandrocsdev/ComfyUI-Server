@@ -5,4 +5,9 @@ const runpodApi = axios.create({
   headers: { Authorization: `Bearer ${process.env.RUNPOD_API_KEY}` },
 });
 
-module.exports = runpodApi;
+const graphqlApi = axios.create({
+  baseURL: 'https://api.runpod.io',
+  headers: { Authorization: `Bearer ${process.env.RUNPOD_API_KEY}` },
+});
+
+module.exports = { runpodApi, graphqlApi };
