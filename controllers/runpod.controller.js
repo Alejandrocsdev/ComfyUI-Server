@@ -29,6 +29,12 @@ exports.createPod = asyncHandler(async (req, res) => {
   }
 });
 
+exports.restartPod = asyncHandler(async (req, res) => {
+  const { podId } = req.params;
+  const data = await runpodService.restartPod(podId);
+  res.json(data);
+});
+
 exports.terminatePod = asyncHandler(async (req, res) => {
   const { podId } = req.params;
   const data = await runpodService.terminatePod(podId);

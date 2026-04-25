@@ -40,8 +40,18 @@ exports.createPod = async () => {
   return data;
 };
 
+exports.restartPod = async (podId) => {
+  const { data } = await runpodApi.post(`/v1/pods/${podId}`);
+  return data;
+};
+
 exports.terminatePod = async (podId) => {
   const { data } = await runpodApi.delete(`/v1/pods/${podId}`);
+  return data;
+};
+
+exports.restartPod = async (podId) => {
+  const { data } = await runpodApi.post(`/v1/pods/${podId}/restart`);
   return data;
 };
 

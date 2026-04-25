@@ -22,6 +22,7 @@ router.get('/pods', runpodController.getPods);
 router.get('/pods/:podId', runpodController.getPod);
 router.get('/pods/:podId/ping', runpodController.pingPod);
 router.post('/pods', runpodController.createPod);
+router.post('/pods/:podId', runpodController.restartPod);
 router.delete('/pods/:podId', runpodController.terminatePod);
 
 module.exports = router;

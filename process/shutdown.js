@@ -12,11 +12,12 @@ const shutdownHandlers = (server) => {
 
   const shutdown = (signal) => {
     console.info(`Received ${signal}. Shutting down gracefully...`);
+		process.exit(1);
 
-    server.close(() => {
-      console.info('HTTP server closed');
-      process.exit(0);
-    });
+    // server.close(() => {
+    //   console.info('HTTP server closed');
+    //   process.exit(0);
+    // });
 
     // setTimeout(() => {
     //   console.error('Force shutdown');
