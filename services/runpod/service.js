@@ -1,7 +1,5 @@
 const axios = require('axios');
 const { runpodApi, graphqlApi } = require('../../config/api/runpodApi');
-const s3Api = require('../../config/api/s3Api');
-const { ListObjectsV2Command } = require('@aws-sdk/client-s3');
 
 const POD_BODY = {
   name: 'ComfyUI-5090',
@@ -51,11 +49,6 @@ exports.pingPod = async (podId, port) => {
   } catch {
     return false;
   }
-};
-
-exports.listPodStorage = async (podId) => {
-  const data = await s3Api.send(new ListObjectsV2Command({ Bucket: podId }));
-  return data;
 };
 
 exports.getBalance = async () => {

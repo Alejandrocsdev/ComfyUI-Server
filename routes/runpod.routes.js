@@ -19,7 +19,6 @@ router.get('/balance', runpodController.getBalance);
 router.get('/pods', runpodController.getPods);
 router.get('/pods/:podId', runpodController.getPod);
 router.get('/pods/:podId/ping', runpodController.pingPod);
-router.get('/pods/:podId/storage', runpodController.listPodStorage);
 router.post('/pods', runpodController.createPod);
 router.delete('/pods/:podId', runpodController.terminatePod);
 

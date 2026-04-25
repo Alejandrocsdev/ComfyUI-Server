@@ -45,12 +45,6 @@ exports.pingPod = asyncHandler(async (req, res) => {
   res.json({ reachable });
 });
 
-exports.listPodStorage = asyncHandler(async (req, res) => {
-  const { podId } = req.params;
-  const data = await runpodService.listPodStorage(podId);
-  res.json(data);
-});
-
 exports.getBalance = asyncHandler(async (req, res) => {
   const data = await runpodService.getBalance();
   res.json(data);

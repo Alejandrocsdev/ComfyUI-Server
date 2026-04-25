@@ -18,10 +18,10 @@ const shutdownHandlers = (server) => {
       process.exit(0);
     });
 
-    setTimeout(() => {
-      console.error('Force shutdown');
-      process.exit(1);
-    }, 10000);
+    // setTimeout(() => {
+    //   console.error('Force shutdown');
+    //   process.exit(1);
+    // }, 10000);
   };
 
 	// Interrupt (Ctrl + C)
