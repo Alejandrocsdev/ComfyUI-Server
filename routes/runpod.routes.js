@@ -16,6 +16,8 @@ router.get('/pods/stream', (req, res) => {
 });
 
 router.get('/balance', runpodController.getBalance);
+router.get('/ssh-port', runpodController.getSSHPort);
+router.post('/ssh/exec', runpodController.execSSH);
 router.get('/pods', runpodController.getPods);
 router.get('/pods/:podId', runpodController.getPod);
 router.get('/pods/:podId/ping', runpodController.pingPod);

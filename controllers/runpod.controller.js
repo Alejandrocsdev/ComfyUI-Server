@@ -49,3 +49,15 @@ exports.getBalance = asyncHandler(async (req, res) => {
   const data = await runpodService.getBalance();
   res.json(data);
 });
+
+exports.getSSHPort = asyncHandler(async (req, res) => {
+  const data = await runpodService.getSSHPort();
+  res.json(data);
+});
+
+exports.execSSH = asyncHandler(async (req, res) => {
+  const { command } = req.body;
+  if (!command) throw new CustomError(400, 'command is required');
+  const result = await runpodService.execSSH(command);
+  res.json(result);
+});
