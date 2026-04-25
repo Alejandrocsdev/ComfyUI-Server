@@ -18,7 +18,7 @@ exports.list = async (prefix = '') => {
   const query = [
     'list-type=2',
     prefix && `prefix=${encodeURIComponent(prefix)}`,
-    delimiter && `delimiter=${encodeURIComponent('/')}`,
+    `delimiter=${encodeURIComponent('/')}`,
   ]
     .filter(Boolean)
     .join('&');

@@ -12,6 +12,6 @@ router.use('/auth', authRoutes);
 router.use('/users', usersRoutes);
 router.use('/comfyui', authenticate, comfyuiRoutes);
 router.use('/runpod', authenticate, runpodRoutes);
-router.use('/s3', s3Routes);
+router.use('/s3', authenticate, s3Routes);
 
 module.exports = router;

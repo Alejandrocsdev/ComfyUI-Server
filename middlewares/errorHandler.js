@@ -2,10 +2,18 @@ const { httpStatus } = require('../utils');
 
 const errorHandler = (error, req, res, next) => {
   const isProd = process.env.NODE_ENV === 'production';
-	
-	// Console: Skip Operational Errors in Production
+
+  // Console: Skip Operational Errors in Production
   if (!isProd || !error.isOperational) {
-    console.error(error);
+    if (error.isAxiosError) {
+      console.error(
+        '[AxiosError]',
+        error.response?.status,
+        error.response?.data || error.message,
+      );
+    } else {
+      console.error(error);
+    }
   }
 
   // Response: Production => Programming Errors
